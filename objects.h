@@ -23,12 +23,13 @@ public:
 class Oper: public Lexem {
 public:
 	enum OPERATOR {
-		PLUS, MINUS, MULTIPLY, LBRACKET, RBRACKET, ASSIGN
+		RBRACKET, MULTIPLY, DIV, MOD, PLUS, MINUS, SHL, SHR, LEQ, LT, 
+		GEQ, GT, EQ, NEQ, BITAND, XOR, BITOR, AND, OR, LBRACKET, ASSIGN
 	};
 
-	static const std::string OPERTEXT[6];
+	static const std::string OPERTEXT[21];
 
-	static const int PRIORITY[6];
+	static const int PRIORITY[21];
 	OPERATOR opertype;
 	Oper();
 	Oper(OPERATOR newOp);

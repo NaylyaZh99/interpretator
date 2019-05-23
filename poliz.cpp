@@ -5,6 +5,7 @@
 
 std::vector<Lexem*> parseLexem(std::string input, std::map<std::string, Variable*> &varMap) {
 	std::vector<Lexem*> ans;
+	int n = sizeof(Oper::OPERTEXT) / sizeof(std::string);
 	for (unsigned int i = 0; i < input.size();) {
 		if (input.at(i) >= '0' && input.at(i) <= '9') {
 			int num = input.at(i) - '0';
@@ -16,20 +17,22 @@ std::vector<Lexem*> parseLexem(std::string input, std::map<std::string, Variable
 			}
 			ans.push_back(new Number(num));
 		} else if (input.at(i) != ' ' ) {
-			unsigned int start = i, j;
-			while (input.at(i) != ' ' && i < input.size()) {
-				i++;
-			}
-			std::string tmp = input.substr(start, i - start);
-			for (j = 0; j < 6; j++) {
-				if (Oper::OPERTEXT[j] == tmp) {
+			int len, op;
+			for (op = 0; op < n; op++) {
+				len = Oper::OPERTEXT[op].size();
+				if (Oper::OPERTEXT[op] == input.substr(i, len)) {
+					ans.push_back(new Oper(Oper::OPERATOR(op)));
 					break;
 				}
 			}
-			if (j < 6) {
-				ans.push_back(new Oper(Oper::OPERATOR(j)));
-				i++;
+			if (op < n) {
+				i = i + len + 1;
 			} else {
+				unsigned int start = i;
+				while (input.at(i) != ' ' && i < input.size()) {
+					i++;
+				}
+				std::string tmp = input.substr(start, i - start);
 				std::map<std::string, Variable*>::iterator it = varMap.find(tmp);
 				if (it == varMap.end()) {
 					varMap[tmp] = 0;
