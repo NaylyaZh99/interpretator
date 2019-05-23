@@ -2,45 +2,46 @@
 #include <string>
 #include <vector>
 #include <map>
-#include "objects.h"
-#include "poliz.h"
-#include "executor.h"
+#include "headers/objects.h"
+#include "headers/poliz.h"
+#include "headers/executor.h"
 
 void print(std::vector<Lexem*> vec, std::map<std::string, Variable*> &varMap);
 
 int main(void) {
 	std::string line;
 	std::map<std::string, Variable*> varMap;
-	std::vector< std::vector<Lexem *> > infixLines;
-	std::vector< std::vector<Lexem *> > postfixLines;
-	while (getline(std::cin, line)) {
-		infixLines.push_back(parseLexem(line, varMap);
-	}
+	//~ std::vector< std::vector<Lexem *> > infixLines;
+	//~ std::vector< std::vector<Lexem *> > postfixLines;
+	//~ while (getline(std::cin, line)) {
+		//~ infixLines.push_back(parseLexem(line, varMap));
+	//~ }
 	//~ for (int row = 0; row < (int) infixLines.size(); row++) {
 		//~ initLabels(infixLines[row], row);
 	//~ }
-	for (const auto &infix: infixLines) {
-		postfixLines.push_back(buildPoliz(infix));
-	}
-	int row = 0;
-	while (0 <= row < (int) postfixLines.size()) {
-		row = evaluatePoliz(postfixLines[row], varMap);
-	}
-	return 0;
-	//~ while (getline(std::cin, line)) {
-		//~ std::cout << line << std::endl;
-		//~ vec = parseLexem(line, varMap);
-		//~ print(vec, varMap);
-		//~ poliz = buildPoliz(vec);
-		//~ print(poliz, varMap);
-		//~ std::cout << evaluatePoliz(poliz, varMap) << std::endl;
-		//~ std::map<std::string, Variable*>::iterator it = varMap.begin();
-		//~ while (it != varMap.end()) {
-			//~ std::cout << it->first << " :: " << it->second->getValue() << std::endl;
-			//~ it++;
-		//~ }
+	//~ for (const auto &infix: infixLines) {
+		//~ postfixLines.push_back(buildPoliz(infix));
+	//~ }
+	//~ int row = 0;
+	//~ while (0 <= row < (int) postfixLines.size()) {
+		//~ row = evaluatePoliz(postfixLines[row], varMap);
+		//~ std::cout << row << std::endl;
 	//~ }
 	//~ return 0;
+	while (getline(std::cin, line)) {
+		std::cout << line << std::endl;
+		std::vector<Lexem *> vec = parseLexem(line, varMap);
+		print(vec, varMap);
+		std::vector<Lexem *> poliz = buildPoliz(vec);
+		print(poliz, varMap);
+		std::cout << evaluatePoliz(poliz, varMap) << std::endl;
+		std::map<std::string, Variable*>::iterator it = varMap.begin();
+		while (it != varMap.end()) {
+			std::cout << it->first << " :: " << it->second->getValue() << std::endl;
+			it++;
+		}
+	}
+	return 0;
 }
 
 void print(std::vector<Lexem*> vec, std::map<std::string, Variable*> &varMap) {
